@@ -1,0 +1,25 @@
+{% extends 'ca/base.html' %}
+{% load static %}
+{% block body %}
+{% if program %}
+<div class="hero-unit">{{ program.name }},&nbsp; {{ program.university }}
+    {% if program in user.get_profile.fav_program.all %}
+    <button class="btn btn-mini fav_program_btn" program-id="{{ program.id }}">Unlike</button>
+    {% else %}
+    <button class="btn btn-mini fav_program_btn" program-id="{{ program.id }}">Like</button>
+    {% endif %}
+
+</div>
+
+<ul>
+    {% for name, value in program.get_fields %}
+    {% if name != 'id' %}
+    <li>
+    <legend>{{ name }}</legend>
+    {{ value }}
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

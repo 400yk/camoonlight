@@ -1,0 +1,75 @@
+{% extends 'ca/base.html' %}
+
+{% block body %}
+<div class="span12">
+    <h1>Search</h1>
+    <form method="get" action="." class=".form-search">
+        <input type="text" id="id_q" name="q" placeholder="Search by name">
+        <input class="btn btn-primary" type="submit" value="Search">
+        <ul id="id_q_result"></ul>
+    </form>
+</div>
+{% if query %}
+<div class="span2">
+    <h3>Filter</h3>
+    {% if facets.fields.academic_professional %}
+    <div>
+        <h4>Degree</h4>
+        <ul>
+            {% for degree in facets.fields.academic_professional %}
+            {% if degree.1 > 0 %} <!-- Only display count > 0 -->
+            <li><a href="{{ request.get_full_path }}&amp;selected_facets=academic_professional_exact:{{ degree.0|urlencode }}">{{ degree.0 }}</a> ({{ degree.1 }})</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% if facets.fields.degree %}
+    <div>
+        <h4>Degree</h4>
+        <ul>
+            {% for degree in facets.fields.degree %}
+            {% if degree.1 > 0 %} <!-- Only display count > 0 -->
+            <li><a href="{{ request.get_full_path }}&amp;selected_facets=degree_exact:{{ degree.0|urlencode }}">{{ degree.0 }}</a> ({{ degree.1 }})</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% if facets.fields.university %}
+    <div>
+        <h4>University</h4>
+        <ul>
+            {% for university in facets.fields.university %}
+            {% if university.1 > 0 %}
+            <li><a href="{{ request.get_full_path }}&amp;selected_facets=university_exact:{{ university.0|urlencode }}">{{ university.0 }}</a> ({{ university.1 }})</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+<div class="span6">
+    <h3>Results</h3>
+    <div class="accordion" id="accordion2">
+        {% for result in page.object_list %}
+        {% include 'search/_result_object.html' %}
+        {% empty %}
+        <p>No results found.</p>
+        {% endfor %}
+    </div>
+
+    {% if page.has_previous or page.has_next %}
+    <div>
+        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+
+        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+    </div>
+    {% endif %}
+</div>
+{% else %}
+<div class="span6">
+    {# Show some example queries to run, maybe query syntax, something else? #}
+</div>
+{% endif %}
+{% endblock %}

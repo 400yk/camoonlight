@@ -1,0 +1,7 @@
+{% if program_list %}
+    {% for program in program_list %}
+    <li class="program-search-suggestion"><a href="{% url 'ca:program_detail' program.id %}" program_id="{{ program.id }}"> {{ program }} </a></li>
+    {% endfor %}
+{% else %}
+<strong>No programs match your search criteria.</strong>
+{% endif %}

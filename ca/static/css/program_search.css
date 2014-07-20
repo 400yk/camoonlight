@@ -1,0 +1,18 @@
+#id_q_result {
+    list-style: none;
+    left: 0;
+    right: 0;
+    background: #fdfdfd;
+    border: 1px solid;
+    border-color: #cbcfe2 #c8cee7 #c4c7d7;
+    border-radius: 3px;
+    @include linear-gradient(top, #fdfdfd, #eceef4);
+    @include box-shadow(0 1px 2px rgba(black, .1));
+}
+
+.program_search_suggestion {
+    overflow: hidden;
+    height: 0;
+}
+
+

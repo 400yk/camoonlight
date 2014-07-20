@@ -1,0 +1,3 @@
+As of Jul 20:
+    Search function searches both program title as well as the content
+
