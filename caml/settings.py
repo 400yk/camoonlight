@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, '../../caml_static').replace('\\','/')
 
+SITE_ID = 2
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -19,11 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'v*089on$q#wm3h*f=m=yi8c-r3wa!gl-o8fvdo!&)^w42^_x=9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
+LOGIN_REDIRECT_URL = '/'
+ALLOWED_HOSTS = [
+        '.camoonlight.com',
+        '.camoonlight.com.',
+        ]
 
 # Tell Django about the profile object
 AUTH_PROFILE_MODULE = "ca.UserProfile"
@@ -55,6 +60,8 @@ ROOT_URLCONF = 'caml.urls'
 
 WSGI_APPLICATION = 'caml.wsgi.application'
 
+if 'DJANGO_SETTINGS_MODULE' not in os.environ:
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'caml.settings'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -63,8 +70,8 @@ DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'test_caml',
-            'USER': 'root',
-            'PASSWORD': 'root',
+            'USER': 'youngwide',
+            'PASSWORD': '198989',
             'HOST': 'localhost',
             'PORT': '3306',
             }
@@ -87,10 +94,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'www.camoonlight.com/ca/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'ca/media/').replace('\\','/')
-MEDIA_URL = '/media/'
-LOGIN_URL = '/ca/login/'
+MEDIA_URL = 'www.camoonlight.com/ca/media/'
+LOGIN_URL = 'www.camoonlight.com/ca/login/'
 """
 HAYSTACK_CONNECTIONS = {
         'default': {
