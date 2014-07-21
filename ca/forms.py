@@ -40,6 +40,11 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ['year_status', 'phone', 'picture', 'skype_id', 'qq_id', 'fav_program', 'fav_university', 'packages']
 
+class UserRegisterForm(forms.ModelForm):
+    # year_status = forms.ModelChoiceField(queryset = UserProfile.YEAR_STATUS_CHOICES, required = True)
+    class Meta:
+        model = UserProfile
+        fields = ['year_status']
 
 class EditUserForm(forms.ModelForm):
     password = forms.CharField(help_text = "Password")

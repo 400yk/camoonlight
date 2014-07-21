@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from ca.models import UserProfile, Program, Package, Tracking, Article
-from ca.forms import UserProfileForm, UserForm
+from ca.forms import UserProfileForm, UserForm, UserRegisterForm
 from django.views import generic
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
@@ -25,7 +25,7 @@ def register(request):
     registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST, request.FILES)
+        profile_form = UserRegisterForm(request.POST, request.FILES)
         if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
@@ -40,6 +40,7 @@ def register(request):
             profile.save()
 
             # ManyToMany relationships can't be added until after the model object is saved
+            """
             selected_fav_programs = profile_form.cleaned_data['fav_program']
             if selected_fav_programs:
                 profile.fav_program = selected_fav_programs
@@ -49,14 +50,14 @@ def register(request):
                     tracking = Tracking.objects.get_or_create(package = package, user = profile)
                     print tracking
                     tracking[0].save()
-
+            """
             profile.save()
             registered = True
             # Deal with the favorite programs
 
     else:
         user_form = UserForm()
-        profile_form = UserProfileForm()
+        profile_form = UserRegisterForm()
     return render_to_response('ca/register.html', {
         'user_form': user_form,
         'profile_form': profile_form,
