@@ -12,9 +12,10 @@
 {% if query %}
 <div class="span2">
     <h3>Filter</h3>
+
     {% if facets.fields.academic_professional %}
     <div>
-        <h4>Degree</h4>
+        <h4>Academic/Professional</h4>
         <ul>
             {% for degree in facets.fields.academic_professional %}
             {% if degree.1 > 0 %} <!-- Only display count > 0 -->
@@ -24,6 +25,7 @@
         </ul>
     </div>
     {% endif %}
+    
     {% if facets.fields.degree %}
     <div>
         <h4>Degree</h4>
@@ -36,6 +38,20 @@
         </ul>
     </div>
     {% endif %}
+
+    {% if facets.fields.major %}
+    <div>
+        <h4>Major</h4>
+        <ul>
+            {% for major in facets.fields.major %}
+            {% if major.1 > 0 %} <!-- Only display count > 0 -->
+            <li><a href="{{ request.get_full_path }}&amp;selected_facets=major_exact:{{ major.0|urlencode }}">{{ major.0 }}</a> ({{ major.1 }})</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
     {% if facets.fields.university %}
     <div>
         <h4>University</h4>
