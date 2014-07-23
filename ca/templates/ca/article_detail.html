@@ -1,8 +1,8 @@
 {% extends 'ca/base.html' %}
 {% load static %}
 {% block body %}
-{% if article %}
-<label>{{ article.title }}</label>
-<p>{{ article.body }}</p>
+{% if article_title %}
+<label>{{ article_title }}</label>
+<p>{{ article_body|safe }}</p>
 {% endif %}
 {% endblock %}

@@ -7,10 +7,10 @@ from django.core.exceptions import ValidationError
 MINIMUM_PASSWORD_LENGTH = 6
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(help_text = "Password", widget = forms.PasswordInput)
-    password_con = forms.CharField(help_text = "Confirm password", widget = forms.PasswordInput)
-    username = forms.CharField(help_text = "Username")
-    email = forms.CharField(help_text = "Email")
+    password = forms.CharField(widget = forms.PasswordInput)
+    password_confirmation = forms.CharField(widget = forms.PasswordInput)
+    username = forms.CharField()
+    email = forms.CharField()
 
     # Set required minimum password length
     def clean_password(self):
@@ -21,7 +21,7 @@ class UserForm(forms.ModelForm):
 
     def clean_password_con(self):
         pw1 = self.cleaned_data.get('password')
-        pw2 = self.cleaned_data.get('password_con')
+        pw2 = self.cleaned_data.get('password_confirmation')
         if pw1 and pw1 != pw2:
             raise forms.ValidationError("Passwords don't match")
         return pw2
@@ -38,7 +38,7 @@ class UserProfileForm(forms.ModelForm):
     packages = forms.ModelMultipleChoiceField(queryset = Package.objects.all(), required = False)
     class Meta:
         model = UserProfile
-        fields = ['year_status', 'phone', 'picture', 'skype_id', 'qq_id', 'fav_program', 'fav_university', 'packages']
+        fields = ['about_me', 'year_status', 'phone', 'picture', 'skype_id', 'qq_id', 'fav_program', 'fav_university', 'packages']
 
 class UserRegisterForm(forms.ModelForm):
     # year_status = forms.ModelChoiceField(queryset = UserProfile.YEAR_STATUS_CHOICES, required = True)
@@ -60,3 +60,10 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['phone', 'picture', 'skype_id', 'qq_id']
+
+class ProgramDetailForm(forms.ModelForm):
+    class Meta:
+        model = Program
+        exclude = ['university', 'program_category', 'name', 'career', 'faculty', 'attendance rate', 'percentage_chinese', 'undergrad_institution']
+
+

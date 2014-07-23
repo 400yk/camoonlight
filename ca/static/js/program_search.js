@@ -1,16 +1,21 @@
 $(document).ready(function() {
     var query_name = $("#id_q").val();
+   /*
     if (query_name != null) {
             $.get('/ca/program_search/', {search_name: query_name}, function(data) {
                 $("#id_q_result").html(data);
             });
     }
-
+    */
     $("#id_q").keyup(function() {
         var query_name = $(this).val();
             $.get('/ca/program_search/', {search_name: query_name}, function(data) {
                 $("#id_q_result").html(data);
             });
+    if (query_name == null) {
+        $("#id_q_result").html("");
+    }
+ 
     });
 
 

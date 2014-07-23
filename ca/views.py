@@ -4,8 +4,8 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from ca.models import UserProfile, Program, Package, Tracking, Article
-from ca.forms import UserProfileForm, UserForm, UserRegisterForm
+from ca.models import UserProfile, Program, Package, Tracking, Article, University
+from ca.forms import UserProfileForm, UserForm, UserRegisterForm, ProgramDetailForm
 from django.views import generic
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
@@ -205,8 +205,26 @@ def program_detail(request, program_id):
     context = RequestContext(request)
     if program_id:
         program = Program.objects.get(pk = program_id)
+        program_fields = program._meta.get_all_field_names()
+        fields = [x for x in program_fields if x not in ['id', 'userprofile', 'university', 'program_category', 'name', 'career', 'faculty', 'attendance rate', 'percentage_chinese', 'undergrad_institution']]
+        values = [getattr(program, x) for x in fields]
+        # Change the font, stylish
+        fields = [x.title() for x in fields]
+        fields = [x.replace("_", " ") for x in fields]
+
+        final_dict = dict(zip(fields, values))
+
+        # Find the corresponding university
+        univ = University.objects.filter(name__exact = program.university)
+        univ_obj = univ[0]
+    else:
+        program = None
+        final_dict = None
+        univ_obj = None
     return render_to_response('ca/program_detail.html', {
         'program': program,
+        'field_dict': final_dict, 
+        'univ': univ_obj,
         }, context)
 
 # Simple view of one article
@@ -220,8 +238,11 @@ def article_detail(request, article_id):
     context = RequestContext(request)
     if article_id: 
         article = Article.objects.get(pk = article_id)
+        article_title = article.title
+        article_body = article.body
     return render_to_response('ca/article_detail.html', {
-        'article': article,
+        'article_title': article_title,
+        'article_body': article_body,
         }, context)
 
 def search_haystack(request):

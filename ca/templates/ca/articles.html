@@ -2,7 +2,7 @@
 {% load static %}
 {% block body %}
 {% if articles %}
-    <label>List of articles</label>
+    <legend>List of articles</legend>
     <ul>
     {% for article in articles %}
     <li><a href="{% url 'ca:article_detail' article.id %}">{{ article.title }}</a></li>   

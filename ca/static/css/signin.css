@@ -1,26 +1,7 @@
 body {
-    padding-top: 60px;
-}
-
-html, body {
-    height: 100%;
-}
-
-.wrapper {
-    min-height: 100%;
-    height: auto !important;
-    margin: 0 auto -60px 0;
-    padding: 0 0 60px 0;
-}
-
-.footer {
-    border-top: 1px solid #eee;
-    height: 60px;
-    width: 100%;
-}
-
-.container .text-muted {
-    margin: 20px 0;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
   }
 
   .form-signin {
@@ -61,7 +42,7 @@ html, body {
    /* Main marketing message and sign up button */
    .jumbotron {
        text-align: center;
-     background-color: #eee;
+       background-color: transparent;
    }
    .jumbotron .btn {
        padding: 14px 24px;

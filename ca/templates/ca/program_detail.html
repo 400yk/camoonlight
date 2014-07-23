@@ -1,25 +1,65 @@
 {% extends 'ca/base.html' %}
 {% load static %}
+{% load bootstrap %}
+{% block head %}
+<link href="{% static 'css/program_detail.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block title %}
+View program detail: {{ program.name }}
+{% endblock %}
 {% block body %}
 {% if program %}
-<div class="hero-unit">{{ program.name }},&nbsp; {{ program.university }}
+<div class="jumbotron">
+    <h2>{{ program.name }}, {{ program.university }}</h2>
+    <a href="{% url 'ca:search' %}" class="btn btn-lg btn-primary">Back to search</a>
     {% if program in user.get_profile.fav_program.all %}
-    <button class="btn btn-mini fav_program_btn" program-id="{{ program.id }}">Unlike</button>
+    <button class="btn btn-lg btn-success fav_program_btn" program-id="{{ program.id }}">Unlike</button>
     {% else %}
-    <button class="btn btn-mini fav_program_btn" program-id="{{ program.id }}">Like</button>
+    <button class="btn btn-lg btn-success fav_program_btn" program-id="{{ program.id }}">Like</button>
     {% endif %}
 
 </div>
-
-<ul>
-    {% for name, value in program.get_fields %}
-    {% if name != 'id' %}
-    <li>
-    <legend>{{ name }}</legend>
-    {{ value }}
-    </li>
-    {% endif %}
-    {% endfor %}
-</ul>
+<table class="table table-striped">
+    <tbody>
+        {% for field, value in field_dict.iteritems %}
+        <tr>
+            <td colspan="2">{{ field }}</td>
+            <td colspan="7">{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="page-header"><h1>{{ program.university }}</h1></div>
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td colspan="2">Year of Founded</td>
+            <td colspan="7">{{ univ.year_founded }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Public/Private</td>
+            <td colspan="7">{{ univ.public_private }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Enrollment</td>
+            <td colspan="7">{{ univ.enrollment }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Location</td>
+            <td colspan="7">{{ univ.location }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Setting</td>
+            <td colspan="7">{{ univ.setting }}</td>
+        </tr>
+    </tbody>
+</table>
 {% endif %}
-{% endblock %}
+<div class="jumbotron">
+    <a href="{% url 'ca:search' %}" class="btn btn-lg btn-primary">Back to search</a>
+    {% if program in user.get_profile.fav_program.all %}
+    <button class="btn btn-lg btn-success fav_program_btn" program-id="{{ program.id }}">Unlike</button>
+    {% else %}
+    <button class="btn btn-lg btn-success fav_program_btn" program-id="{{ program.id }}">Like</button>
+    {% endif %}
+    {% endblock %}

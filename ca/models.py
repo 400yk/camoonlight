@@ -108,6 +108,7 @@ class UserProfile(models.Model):
     fav_program = models.ManyToManyField(Program) # Favorite program 
     fav_university = models.ManyToManyField(University) # Favorite School    
     packages = models.ManyToManyField(Package, through = 'Tracking')
+    about_me = models.TextField(null = True, blank = True)
     def __unicode__(self):
         return self.user.username
 

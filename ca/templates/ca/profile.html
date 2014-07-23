@@ -1,47 +1,109 @@
 {% extends 'ca/base.html' %}
 {% load static %}
+{% block head %}
+<link href="{% static 'css/profile.css' %}" rel="stylesheet">
+{% endblock %}
+{% block title %}Your user profile{% endblock %}
 {% block body %}
 {% if profile %}
-<h1>Your profile</h1><a href="{% url 'ca:edit_profile' %}" class="btn btn-primary" id="edit_profile_button">Edit</a>
-<form class="form-signin span4" method="post" id="profile_form">
+<div class="jumbotron">
+    <h1>Hello,&nbsp;{{ user.username }}</h1>
+    <br>
+    <p>
+    <a href="{% url 'ca:edit_profile' %}" class="btn btn-primary btn-lg" role="button">Edit your information</a>
+    </p>
+</div>
+<form class="" method="post" id="profile_form">
     {% csrf_token %}
-    <h1>{{ user.username }}</h1>
-    <label>Current year:
-    {{ profile.year_status }} </label>
-    <img src="{{ MEDIA_URL }}{{ profile.picture }}" alt="Image"/>
-    <h4>Package Subscription</h4>
-    {% if profile.packages %}
-    <ul>
-        {% for package in profile.packages.all %}
-        <li>{{ package.package_name }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <h4>Favorite Programs</h4>
-    {% if profile.fav_program %}
-    <ul>
-        {% for program in profile.fav_program.all %}
-        <li>{{ program }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <h4>Favorite University</h4>
-    {% if profile.fav_university %}
-    <ul>
-        {% for univ in profile.fav_university.all %}
-        <li>{{ univ }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <h4>Phone Number:</h4>
-    {{ profile.phone }}
-    <br/>
-    <h4>Skype ID:</h4>
-    {{ profile.skype_id }}
-    <br/>
-    <h4>QQ ID:</h4>
-    {{ profile.qq_id }}
-    <br/>
+    <div class="page-header"><h1>Basic Information</h1></div>
+    <table class="table borderless">
+        <tbody>
+            <tr>
+                <td>Username:</td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td>Current year:</td>
+                <td>{{ profile.year_status }}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td>About me:</td>
+                <td>
+                    {% if profile.about_me %}
+                    {{ profile.about_me }}
+                    {% endif %}</td>
+            </tr>
+ 
+        </tbody>
+    </table>
+
+    <div class="page-header"><h1>Additional Information</h1></div>
+    <table class="table borderless">
+        <tbody>
+            <tr>
+                <td>Phone number:</td>
+                <td>
+                    {% if profile.phone %}
+                    {{ profile.phone }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Skype ID:</td>
+                <td>{{ profile.skype_id }}</td>
+            </tr>
+            <tr>
+                <td>QQ ID:</td>
+                <td>{{ profile.qq_id }}</td>
+            </tr>
+            <tr>
+                <td>Profile photo:</td>
+                <td><img src="{{ MEDIA_URL }}{{ profile.picture }}" alt="Image"/></td>
+            </tr>
+            <tr>
+                <td>Package subscription:</td>
+                <td>
+                    {% if profile.packages %}
+                    <ul>
+                        {% for package in profile.packages.all %}
+                        <li>{{ package.package_name }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Favorite program(s):</td>
+                <td>
+                    {% if profile.fav_program %}
+                    <ul>
+                        {% for program in profile.fav_program.all %}
+                        <li><a href="{% url 'ca:program_detail' program.id %}">{{ program }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Favorite university(s):</td>
+                <td>
+                    {% if profile.fav_university %}
+                    <ul>
+                        {% for univ in profile.fav_university.all %}
+                        <li>{{ univ }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
 </form>
 {% else %}
 <h1>Your user profile does not exist!</h1>

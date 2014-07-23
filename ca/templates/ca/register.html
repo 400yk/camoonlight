@@ -1,15 +1,26 @@
 {% extends 'ca/base.html' %}
 {% load static %}
+{% load bootstrap %}
+{% block head %}
+<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block title %}Account Registration{% endblock %}
 {% block body %}
-<h1>Register with CAML</h1>
 <div class="container">
     {% if registered %}
-    <strong>Thank you for registering</strong>
+    <div class="jumbotron">
+        <h1>Thank you for registering!</h1>
+        <p class="lead">Now you can sign in to your new account!</p>
+        <p>
+        <a class="btn btn-lg btn-success" href="{% url 'ca:login' %}" role="button">Sign in</a>
+        </p>
+    </div>
     {% else %}
-    <form class="form-signin span4" id="user_register_form" method="post" enctype="multipart/form-data">
+    <form class="form-signin" id="user_register_form" method="post" enctype="multipart/form-data">
+        <h2 class="form-signin-heading">Register with CAML</h2>
         {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
+        {{ user_form|bootstrap }}
+        {{ profile_form|bootstrap }}
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
     {% endif %}

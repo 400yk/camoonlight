@@ -1,0 +1,19 @@
+.borderless tbody tr td, .borderless thead tr th .borderless td {
+    border: none;
+}
+.table {
+   /* width: 50%; */
+}
+.table td {
+    font-size: 20px;
+}
+
+#edit_profile_form {
+    max-width: 500px;
+    padding: 15px;
+}
+
+.jumbotron .btn {
+    margin-top: 15px;
+    font-size: 10px;
+}
