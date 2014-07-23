@@ -95,10 +95,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = 'www.camoonlight.com/ca/static/'
+STATIC_URL = 'http://www.camoonlight.com/ca/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'ca/media/').replace('\\','/')
-MEDIA_URL = 'www.camoonlight.com/ca/media/'
-LOGIN_URL = 'www.camoonlight.com/ca/login/'
+MEDIA_URL = 'http://www.camoonlight.com/ca/media/'
+LOGIN_URL = 'http://www.camoonlight.com/ca/login/'
 """
 HAYSTACK_CONNECTIONS = {
         'default': {
